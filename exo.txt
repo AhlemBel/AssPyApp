@@ -1,0 +1,11 @@
+Write a function that calculates the factorial of a number
+Write a function that checks if a string is a palindrome
+Write a function that returns the Fibonacci sequence up to n terms
+Write a function that sorts a list of numbers in ascending order without using built-in sort functions
+Write a function that counts the occurrences of each word in a string
+Write a function that converts a decimal number to binary
+Write a function that finds the maximum number in a list
+Write a function that reverses a string without using built-in reverse functions
+Write a function that checks if a number is prime
+Write a function that calculates the sum of all even numbers in a list
+
