@@ -33,8 +33,17 @@ if not os.path.exists(TIMER_INI_FILE):
     print("Warning: Timer configuration file not found. Using default duration of 15 minutes.")
 TIMER_DURATION = load_timer_duration_from_ini(TIMER_INI_FILE, default_duration=900)
 
-DESKTOP_PATH = os.path.join(os.path.expanduser('~'), 'Desktop')
-SUBMISSION_LOG = os.path.join(DESKTOP_PATH, "submission_log.txt")
+def load_save_directory_from_ini(file_path, default_directory):
+    config = configparser.ConfigParser()
+    config.read(file_path)
+    try:
+        return config['Settings']['SaveDirectory']
+    except KeyError:
+        return default_directory  # Fallback to default if the key is missing
+
+SAVE_DIRECTORY = load_save_directory_from_ini(TIMER_INI_FILE, default_directory=os.path.expanduser('~'))
+
+SUBMISSION_LOG = os.path.join(SAVE_DIRECTORY, "submission_log.txt")
 
 # Syntax highlighting for text zone
 PYTHON_KEYWORDS = [
@@ -287,7 +296,7 @@ class StudentAssessmentApp:
         solution = self.code_editor.get("1.0", END).strip()
         
         # Create group folder if it doesn't exist
-        group_folder = os.path.join(DESKTOP_PATH, group)
+        group_folder = os.path.join(SAVE_DIRECTORY, group)
         os.makedirs(group_folder, exist_ok=True)
         
         # Create solution file
