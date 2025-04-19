@@ -7,18 +7,13 @@ from tkinter import messagebox, scrolledtext
 from datetime import datetime
 
 # Configuration
-EXERCISES = [
-    "Write a function that calculates the factorial of a number.",
-    "Write a function that checks if a string is a palindrome.",
-    "Write a function that returns the Fibonacci sequence up to n terms.",
-    "Write a function that sorts a list of numbers in ascending order without using built-in sort functions.",
-    "Write a function that counts the occurrences of each word in a string.",
-    "Write a function that converts a decimal number to binary.",
-    "Write a function that finds the maximum number in a list.",
-    "Write a function that reverses a string without using built-in reverse functions.",
-    "Write a function that checks if a number is prime.",
-    "Write a function that calculates the sum of all even numbers in a list.",
-]
+def load_exercises_from_file(file_path):
+    with open(file_path, 'r') as file:
+        exercises = [line.strip() for line in file if line.strip()]
+    return exercises
+
+EXERCISES_FILE = "exo.txt"  # Update this path
+EXERCISES = load_exercises_from_file(EXERCISES_FILE)
 
 TIMER_DURATION = 900  # 15 minutes in seconds
 DESKTOP_PATH = os.path.join(os.path.expanduser('~'), 'Desktop')
@@ -54,7 +49,7 @@ class SyntaxHighlighter:
         
         # Highlight keywords
         for word in PYTHON_KEYWORDS:
-            self.highlight_pattern(r'\b%s\b' % word, 'keyword')
+            self.highlight_pattern(r'\b%s\b' % word, 'key    word')
             
         # Highlight builtins
         for word in PYTHON_BUILTINS:
@@ -159,7 +154,7 @@ class StudentAssessmentApp:
         if not os.path.exists(SUBMISSION_LOG):
             return False
             
-        student_id = f"{self.first_name.get().strip()} {self.last_name.get().strip()}"
+        student_id = f"{self.first_name.get().str    ip()} {self.last_name.get().strip()}"
         group = self.group.get().strip()
         
         try:
@@ -185,6 +180,9 @@ class StudentAssessmentApp:
         Label(main_frame, text=student_info, font=self.medium_font).grid(row=0, column=0, columnspan=2, pady=10)
         
         # Exercise display (automatically generated)
+        if not EXERCISES:
+           messagebox.showerror("Error", "No exercises found in the file.")
+           return
         self.current_exercise = random.choice(EXERCISES)
         Label(main_frame, text="Your Exercise:", font=self.medium_font).grid(row=1, column=0, sticky=NW, pady=5)
         
