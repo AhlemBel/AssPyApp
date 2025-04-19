@@ -5,6 +5,7 @@ import re
 from tkinter import *
 from tkinter import messagebox, scrolledtext
 from datetime import datetime
+import configparser
 
 # Configuration
 def load_exercises_from_file(file_path):
@@ -15,7 +16,23 @@ def load_exercises_from_file(file_path):
 EXERCISES_FILE = "exo.txt"  # Update this path
 EXERCISES = load_exercises_from_file(EXERCISES_FILE)
 
-TIMER_DURATION = 900  # 15 minutes in seconds
+def load_timer_duration_from_ini(file_path, default_duration=900):
+    config = configparser.ConfigParser()
+    config.read(file_path)
+    try:
+        duration = int(config['Settings']['TimerDuration'])
+        return duration
+    except (KeyError, ValueError) as e:
+        return default_duration
+
+# Path to the .ini file
+TIMER_INI_FILE = "config.ini"  # Update this path if needed
+
+# Load timer duration
+if not os.path.exists(TIMER_INI_FILE):
+    print("Warning: Timer configuration file not found. Using default duration of 15 minutes.")
+TIMER_DURATION = load_timer_duration_from_ini(TIMER_INI_FILE, default_duration=900)
+
 DESKTOP_PATH = os.path.join(os.path.expanduser('~'), 'Desktop')
 SUBMISSION_LOG = os.path.join(DESKTOP_PATH, "submission_log.txt")
 
