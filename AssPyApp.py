@@ -180,7 +180,7 @@ class StudentAssessmentApp:
         if not os.path.exists(SUBMISSION_LOG):
             return False
             
-        student_id = f"{self.first_name.get().str    ip()} {self.last_name.get().strip()}"
+        student_id = f"{self.first_name.get().strip()} {self.last_name.get().strip()}"
         group = self.group.get().strip()
         
         try:
