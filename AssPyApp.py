@@ -75,7 +75,7 @@ class SyntaxHighlighter:
         
         # Highlight keywords
         for word in PYTHON_KEYWORDS:
-            self.highlight_pattern(r'\b%s\b' % word, 'key    word')
+            self.highlight_pattern(r'\b%s\b' % word, 'keyword')
             
         # Highlight builtins
         for word in PYTHON_BUILTINS:
